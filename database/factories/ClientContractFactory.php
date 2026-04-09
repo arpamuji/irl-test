@@ -8,7 +8,7 @@ use App\Models\Model;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Model>
+ * @extends Factory<ClientContract>
  */
 class ClientContractFactory extends Factory
 {
@@ -37,7 +37,7 @@ class ClientContractFactory extends Factory
     // Active contract within date range
     public function active(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'start_date' => now()->subMonths(2)->format('Y-m-d'),
             'end_date' => now()->addMonths(12)->format('Y-m-d'),
         ]);
@@ -46,7 +46,7 @@ class ClientContractFactory extends Factory
     // Expired contract
     public function expired(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'start_date' => now()->subMonths(12)->format('Y-m-d'),
             'end_date' => now()->subMonths(2)->format('Y-m-d'),
         ]);
@@ -55,7 +55,7 @@ class ClientContractFactory extends Factory
     // Future contract, not started yet
     public function future(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'start_date' => now()->addMonths(2)->format('Y-m-d'),
             'end_date' => now()->addMonths(14)->format('Y-m-d'),
         ]);
@@ -64,7 +64,7 @@ class ClientContractFactory extends Factory
     // Contract with no end date (always active)
     public function unbounded(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'start_date' => null,
             'end_date' => null,
         ]);
@@ -73,7 +73,7 @@ class ClientContractFactory extends Factory
     // Zero monthly value contract
     public function zeroValue(): static
     {
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'monthly_value' => 0,
         ]);
     }
@@ -81,7 +81,7 @@ class ClientContractFactory extends Factory
     // Deleted contract (soft deleted)
     public function deleted(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'deleted_at' => now(),
         ]);
     }
@@ -89,7 +89,7 @@ class ClientContractFactory extends Factory
     // Associate contract with specific client
     public function forClient(Client|int $client): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'client_id' => $client instanceof Client ? $client->id : $client,
         ]);
     }
